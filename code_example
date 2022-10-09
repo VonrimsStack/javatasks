@@ -1,0 +1,96 @@
+public class Main {
+
+
+    public static void main(String[] args) {
+
+//        Given n, take the sum of the digits of n. If that value has more than one digit, continue reducing in this way until a single-digit number is produced. The input will be a non-negative integer.
+//        Examples:
+//        16  -->  1 + 6 = 7
+//        942  -->  9 + 4 + 2 = 15  -->  1 + 5 = 6
+//        132189  -->  1 + 3 + 2 + 1 + 8 + 9 = 24  -->  2 + 4 = 6
+//        493193  -->  4 + 9 + 3 + 1 + 9 + 3 = 29  -->  2 + 9 = 11  -->  1 + 1 = 2
+
+        System.out.println("digitalRoot = " + digitalRoot(4444999));
+        // 4444999 = 43 = 7
+
+//____________________________________________________________________________________________________________
+
+//        Your goal in this task is to implement a difference function, which subtracts one list from another and returns the inverted result.
+//        It should remove all values from list a, which are present in list b inverting their order.
+//        Examples:
+//        arrayDiff({1,2},{1}) == {2}
+//        arrayDiff({1,2,2,2,3},{2}) == {3,1}
+//        arrayDiff({1,7,5,2,3,3,8,1,5},{1,2,8}) == {5,3,3,5,7}
+
+
+        int[] arr_difone = new int[]{1,7,5,2,3,3,8,1,5};
+        int[] arr_diftwo = new int[]{1,2,8};
+        int[] arr_st = arrayDiff(arr_difone, arr_diftwo);
+    }
+
+
+    public static int digitalRoot(int nn) {
+        String strnn = Integer.toString(nn);
+        int countnum = 0;
+        while (strnn.length()>1){
+            for (int i = 0; i < strnn.length(); i++){
+                countnum += Integer.parseInt(String.valueOf(strnn.charAt(i)));
+            }
+            strnn = Integer.toString(countnum);
+            countnum = 0;
+        }
+        return Integer.parseInt(strnn);
+    }
+
+
+    public static int [] arrayDiff(int[] arra, int[] arrb) {
+        int [] arrCopyA = new int [arra.length];
+        int [] infarr = new int [arra.length];
+        int countfor = 0;
+        int allow = 0;
+
+        if(arrb.length == 0){
+            return arra;
+        } else {
+            for (int u = 0; u < arrb.length; u++) {
+                if (allow > 0){
+
+                    for (int l = 0; l < arrCopyA.length; l++) {
+                        arra[l] = arrCopyA[l];
+                    }
+                    for (int y = 0; y < arrCopyA.length; y++) {
+                        arrCopyA[y] = 0;
+                    }
+                }
+                for (int i = 0; i < arra.length; i++) {
+                    if (arra[i] == arrb[u]) {
+                        infarr[i] = i + 10;
+                    } else {
+                        arrCopyA[i] = (arra[i]);
+                    }
+                }
+                allow++;
+            }
+
+            for (int b = 0; b < infarr.length; b++) {
+                if (infarr[b] < 10) {
+                    countfor++;
+                }
+            }
+
+            int [] resarr = new int [countfor];
+            int curstep = countfor;
+            for (int g = 0; g < arrCopyA.length; g++) {
+                if (infarr[g] < 10 && curstep > 0) {
+                        resarr[curstep-1] = arrCopyA[g];
+                        curstep--;
+                }
+            }
+            System.out.print ("arrayDiff = ");
+            for (int r = 0; r < resarr.length; r++) {
+                System.out.print (resarr[r] + " ");
+            }
+            return resarr;
+        }
+    }
+}
